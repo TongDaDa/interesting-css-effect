@@ -1,10 +1,193 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-    <title>$Title$</title>
+    <title>Title</title>
+    <style>
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        body > div{  margin-right: 20px;  }
+        @keyframes mask1 {
+            50%{
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+        @keyframes mask2 {
+            50%{
+                visibility: hidden;
+                opacity: 0;
+            }
+        }
+        @keyframes left {
+            from{
+                transform:rotate(0deg)
+            }
+            to{
+                transform:rotate(360deg)
+            }
+        }
+        @keyframes spin {
+            to{  transform: rotate(.5turn);  }
+        }
+        @keyframes ficker {
+            50%{ background: #ddd; }
+        }
+        .des{
+            display: table;
+            line-height: 1.2;
+            font-size: 18px;
+            text-align: center;
+            margin: 0;
+        }
+        .des > span{
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .fixed{
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            background: #fff;
+            transform: translate(-50%,-50%);
+            box-shadow: 0px 0px 5px rgba(0,0,0,.15);
+            z-index: 10;
+        }
+        .circle{
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background: #ddd;
+            border-radius:50%;
+            overflow: hidden;
+        }
+        .circle-bad > div{
+            position: absolute;
+            width: 50px;
+            height: 100%;
+        }
+        .circle_half_1{
+            margin-left:50%;
+            transform-origin: left;
+            transform: rotate(0deg);
+            background: deeppink;
+            animation:left 3s linear infinite ;
+            z-index: 1;
+        }
+        .mask_1{
+            opacity: 0;
+            visibility: hidden;
+            margin-left:50%;
+            animation: mask1 3s step-end infinite;
+            z-index: 2;
+            background: #ddd;
+        }
+        .mask_2{
+            background: deeppink;
+            animation: mask2 3s step-end infinite;
+        }
+        
+        /*2*/
+        .circle-easy{
+            background-color: deeppink;
+            background-image:linear-gradient(to right,transparent 50%, #ddd 0);
+        }
+        .circle-easy::before{
+            content: ' ';
+            display: block;
+            height: 100%;
+            margin-left: 50%;
+            transform-origin: left;
+            background-color:inherit;
+            animation: spin 1.5s linear infinite,
+                       ficker 3s step-end infinite;
+        }
+        .j-circle-easy::before{
+            animation-play-state: paused;
+            animation-delay: inherit;
+        }
+
+        /*3*/
+        .round-svg{
+            width: 100px;
+            height: 100px;
+            transform:rotate(-90deg);
+            background: deeppink;
+            border-radius: 50%;
+        }
+        .round-svg > circle{
+            fill:deeppink;
+            stroke: #ddd;
+            stroke-width: 32;
+            stroke-dasharray: 0 100;
+            transition: 1.5s all ease-in-out;
+        }
+    </style>
 </head>
 <body>
-$END$
+
+<!--1-->
+<div>
+    <div class="circle circle-bad">
+        <div class="mask_1"></div>
+        <div class="circle_half_1"></div>
+        <div class="mask_2"></div>
+    </div>
+    <!--<p class="des"> bad, don't DRY </p>-->
+    <!--<p> don't control progress </p>-->
+</div>
+
+<!--2-->
+<div class="circle circle-easy">
+    <p class="des fixed">
+        <span>easy</span>
+    </p>
+</div>
+
+<!--3-->
+<div class="circle circle-easy j-circle-easy">
+    <p class="des fixed">
+        <span>value</span>
+    </p>
+</div>
+
+<!--4-->
+<div style="height:100px;position:relative;">
+    <svg viewBox="0 0 32 32" class="round-svg">
+        <circle r="16" cx="16" cy="16"/>
+    </svg>
+    <p class="des fixed">
+        <span>anm</span>
+    </p>
+</div>
+
+<!--5-->
+<div class="conic-gradient">
+
+</div>
+<script>
+
+    const persentage = 60; //%
+    const DURATION = 3;
+    const ele = document.querySelector('.j-circle-easy');
+    ele.style.animationDelay = `-${DURATION/(100/persentage)}s`
+
+
+//    svg
+    const ele_1 = document.querySelector('.round-svg circle');
+    const persentage_1 = 57;
+
+    requestAnimationFrame(()=>{
+        ele_1.style.strokeDasharray = `${persentage_1} 100`;
+    }, 10)
+
+</script>
 </body>
 </html>

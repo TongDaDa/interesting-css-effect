@@ -1,10 +1,160 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-    <title>$Title$</title>
+    <title>css轮播</title>
+    <style>
+        body,div,p,span,ul,li{
+            margin: 0;
+            padding: 0;
+        }
+        ul,ol{
+            list-style: none;
+        }
+        img{
+            max-width: 100%;
+            vertical-align: bottom;
+        }
+        .container{
+            position: relative;
+            width: 500px;
+            margin: 30px auto;
+            overflow: hidden;
+        }
+        .container-fade{
+            height: 200px;
+        }
+        .container > .container-wrap{
+            position: relative;
+            width: calc(500px * 3);
+            height: 100%;
+        }
+        .container-wrap-slide{
+            animation: sliderRight 5s linear infinite;
+        }
+
+        .container-wrap-opacity > .img-item{
+            position: absolute;
+            animation: fade 15s linear infinite;
+            opacity: 0;
+            animation-delay: -1s;
+        }
+        .container-wrap-opacity > .img-item:nth-child(2){
+            animation-delay: 4s;
+        }
+        .container-wrap-opacity > .img-item:nth-child(3){
+            animation-delay: 9s;
+        }
+
+        @keyframes  sliderRight{
+            from{ transform: translate3d(0,0,0);  }
+            17%{  transform: translate3d(0,0,0);  }
+            36%{  transform: translate3d(-33.333%,0,0);  }
+            50%{  transform: translate3d(-33.333%,0,0);  }
+            66%{  transform: translate3d(-66.666%,0,0);  }
+            84%{  transform: translate3d(-66.666%,0,0);  }
+            to {  transform: translate3d(0,0,0);  }
+        }
+
+        /*
+            三帧，每帧停留3s 渐入渐出 1s
+            总时间: (3+1+1) * 3 = 15s
+        */
+        @keyframes fade {
+            0%{
+                opacity:0;
+                z-index:2;
+            }
+            6.666%{
+                opacity:1;
+                z-index: 1;
+            }
+            20%{
+                opacity:1;
+                z-index:1;
+            }
+            33.333%{
+                opacity:0;
+                z-index:0;
+            }
+
+            /* 预留出 2 * 5 = 10s 显示其他两张图片 */
+            100%{
+                opacity:0;
+                z-index:0;
+            }
+        }
+
+        .img-item{
+            float:left;
+            width:500px;
+            height: 100%;
+            background: red;
+        }
+        .img-item:nth-child(2){
+            background: green;
+        }
+        .img-item:nth-child(3){
+            background: blue;
+        }
+        .pagination{
+            position: absolute;
+            display: flex;
+            bottom: 10px;
+            left: 50%;
+            z-index: 50;
+            transform: translateX(-50%);
+        }
+        .pagination > li {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: hsla(0,100%,100%,.8);
+            border: 1px solid #ddd;
+        }
+        .pagination > li:not(:last-child){
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
-$END$
+
+    <div class="container">
+        <div class="container-wrap container-wrap-slide">
+            <div class="img-item">
+                <img src="http://39.107.66.37:8090/music/playImg/228160.jpg" alt="">
+            </div>
+            <div class="img-item">
+                <img src="http://39.107.66.37:8090/music/playImg/228565.jpg" alt="">
+            </div>
+            <div class="img-item">
+                <img src="http://39.107.66.37:8090/music/playImg/227628.jpg" alt="">
+            </div>
+        </div>
+        <ul class="pagination">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="container container-fade">
+        <div class="container-wrap container-wrap-opacity">
+            <div class="img-item">
+                <img src="http://39.107.66.37:8090/music/playImg/226667.jpg" alt="">
+            </div>
+            <div class="img-item">
+                <img src="http://39.107.66.37:8090/music/playImg/226818.jpg" alt="">
+            </div>
+            <div class="img-item">
+                <img src="http://39.107.66.37:8090/music/playImg/227628.jpg" alt="">
+            </div>
+        </div>
+        <ul class="pagination">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
 </body>
 </html>
