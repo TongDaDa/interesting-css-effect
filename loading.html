@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./css/fontawesome.min.css" />
+    <link rel="stylesheet" href="./css/fa-brands.css" />
+    <link rel="stylesheet" href="./css/fa-solid.css" />
+    <link rel="stylesheet" href="./css/fa-regular.css">
+    <style>
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .player{
+            min-width: 150px;
+            min-height: 150px;
+            position: relative;
+        }
+        .player .vp-spin-circle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            fill: none;
+            stroke-width: 3%;
+            stroke: #fcfcfc;
+            stroke-opacity: 1;
+            stroke-linecap: round;
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            -webkit-animation: rotate 2s linear .25s infinite,dash 1.5s ease-in-out .25s infinite;
+            animation: rotate 2s linear .25s infinite,dash 1.5s ease-in-out .25s infinite;
+        }
+        .player .vp-spin-circle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            fill: none;
+            stroke-width: 3%;
+            stroke: #fcfcfc;
+            stroke-opacity: 1;
+            stroke-linecap: round;
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            -webkit-animation: rotate 2s linear .25s infinite,dash 1.5s ease-in-out .25s infinite;
+            animation: rotate 2s linear .25s infinite,dash 1.5s ease-in-out .25s infinite;
+        }
+        .player .vp-spin-circle {
+            stroke-width: 6%;
+        }
+        .player .vp-spin {
+            width: 100%;
+            max-width: 140px;
+            position: absolute;
+        }
+
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0
+            }
+            50% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -35px
+            }
+            100% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -124px
+            }
+        }
+
+        @-webkit-keyframes rotate {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg)
+            }
+        }
+    </style>
+    <style>
+        .lightning-loading{
+            font-size: 110px;
+            background-image: -webkit-linear-gradient(top,#a8aebc 50%,#9fcc6b 50%);
+            text-fill-color: transparent;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            background-size: 100% 200%;
+            animation: masked-animation .5s infinite linear;
+        }
+
+        @keyframes masked-animation {
+            0% {
+                background-position: 0 0
+            }
+            100% {
+                background-position: 0 -100%
+            }
+        }
+    </style>
+
+    <style>
+        .animated4 {
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+        }
+        .gradient-loading{
+            background-image: linear-gradient( #FFFF80 20%, rgba(204, 153, 153, 0.4) 30%, #E6E6FF);
+            /*-webkit-text-fill-color: transparent;*/
+            /*-webkit-background-clip: text;*/
+            text-fill-color: transparent;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            background-size: 100% 200%;
+            font-size: 30px;
+        }
+    </style>
+
+    <style>
+        .bfc_test{
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!--svg loading-->
+    <div class="player">
+        <div class="vp-spin">
+            <svg class="vp-spin-trace" viewBox="0 0 50 50">
+                <circle cx="50%" cy="50%" r="20"></circle>
+            </svg>
+            <svg class="vp-spin-circle" viewBox="0 0 50 50">
+                <circle cx="50%" cy="50%" r="20"></circle>
+            </svg>
+        </div>
+    </div>
+
+    <!--使用 background-clip : text-->
+    <!--使用 background-size 增大-->
+    <!--::before font icon-->
+    <!-- text-fill-color-->
+    <!-- -webkit-background-clip-->
+    <div class="fa fa-bolt lightning-loading">
+    </div>
+
+    <!--gradient-->
+    <div class="gradient-loading animated animated1 infinite colorCycle linear flex flex-column items-center justify-center">
+        <svg aria-hidden="true" data-prefix="fas" data-icon="spinner-third" role="img"
+             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+             class="db animated animated4 animated linear infinite svg-inline--fa fa-spinner-third fa-w-16 fa-spin fa-fw fa-3x">
+            <path fill="currentColor"
+                  d="M456.433 371.72l-27.79-16.045c-7.192-4.152-10.052-13.136-6.487-20.636 25.82-54.328 23.566-118.602-6.768-171.03-30.265-52.529-84.802-86.621-144.76-91.424C262.35 71.922 256 64.953 256 56.649V24.56c0-9.31 7.916-16.609 17.204-15.96 81.795 5.717 156.412 51.902 197.611 123.408 41.301 71.385 43.99 159.096 8.042 232.792-4.082 8.369-14.361 11.575-22.424 6.92z"
+                  class="">
+            </path>
+        </svg>
+    </div>
+    <!--<span class="bfc_test">-->
+        <!--<p> 4564654 </p>-->
+        <!--<p> 24234 </p>-->
+    <!--</span>-->
+</body>
+</html>
