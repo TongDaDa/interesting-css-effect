@@ -106,14 +106,41 @@
     </style>
 
     <style>
-        .animated4 {
-            -webkit-animation-duration: 1s;
-            animation-duration: 1s;
+
+        @keyframes ColorCircle {
+            0% {
+                color: #228ae6;
+            }
+            12.5% {
+                color: #12b886;
+            }
+            25% {
+                color: #40c057;
+            }
+            37.5% {
+                color: #ffd43b;
+            }
+            50% {
+                color: #fd7e14;
+            }
+            62.5% {
+                color: #fa5252;
+            }
+            75% {
+                color: #f783ac;
+            }
+            87.5% {
+                color: #7950f2;
+            }
+            100% {
+                color: #228ae6;
+            }
         }
+
         .gradient-loading{
-            background-image: linear-gradient( #FFFF80 20%, rgba(204, 153, 153, 0.4) 30%, #E6E6FF);
-            /*-webkit-text-fill-color: transparent;*/
-            /*-webkit-background-clip: text;*/
+            animation: ColorCircle infinite;
+            -webkit-animation-duration: 2s;
+            animation-duration: 2s;
             text-fill-color: transparent;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -121,11 +148,21 @@
             background-size: 100% 200%;
             font-size: 30px;
         }
+        .animated4 {
+            animation-duration: 1s;
+        }
     </style>
 
     <style>
         .bfc_test{
-            overflow: hidden;
+            display: flex;
+            /*overflow: hidden;*/
+        }
+        .bfc_test::first-letter{
+            color: red;
+        }
+        .bfc_test::first-line{
+            color: blue;
         }
     </style>
 </head>
@@ -161,9 +198,6 @@
             </path>
         </svg>
     </div>
-    <!--<span class="bfc_test">-->
-        <!--<p> 4564654 </p>-->
-        <!--<p> 24234 </p>-->
-    <!--</span>-->
+
 </body>
 </html>
