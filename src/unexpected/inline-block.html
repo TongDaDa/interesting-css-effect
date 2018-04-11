@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+          margin: 0; padding: 0;
+        }
+        body{
+            font-size: 30px;
+        }
+        .box{
+            display: inline-block;
+            width: 50%;
+            height: 200px;
+            background: red;
+            color: #fff;
+        }
+        .box:last-child{
+            background: blue;
+        }
+        .module{
+            height: 450px;
+            border-bottom: 1px solid #ddd;
+        }
+        .module:first-child{
+            font-size: 0;
+        }
+        .inline{
+            width: 100px;
+            height:100px;
+            background: yellow;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .inline:last-child{
+            vertical-align: bottom;
+        }
+    </style>
+</head>
+<body>
+
+
+<!--
+note:
+两个宽度为50%的行块元素出现换行情况
+cause:
+在每个行块元素旁，有空白节点占用空间，要想清除它可能需要font-size设置为0,或者在html结构上清除空格保持无间距例如
+<div><span><span><img /></div>
+
+对于 inline-block 元素如果里面有内容则根据元素里的内联元素的基线为准，如果元素为空，以margin框为准.
+-->
+
+<div class="module">
+    <div class="box">
+        xxx
+    </div>
+    <div class="box">
+        xxx
+    </div>
+</div>
+
+
+<div class="module">
+    <div class="box">
+        xxx
+    </div>
+    XXX
+    <div class="box">
+        xxx
+    </div>
+</div>
+
+</body>
+</html>

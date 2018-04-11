@@ -4,6 +4,10 @@
 <head>
     <title>Title</title>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
         body {
             height: 100vh;
             text-align: center;
@@ -17,7 +21,7 @@
         }
         #container{
             display: inline-block;
-            transition: .3s all;
+            transition: .2s all;
         }
         #wrap{
             display: inline-block;
@@ -37,15 +41,22 @@
             background-color: rgba(0,0,0,.5);
             opacity: 0;
             padding: 4em 0;
-            transition: .3s all;
+            transition: .3s all linear;
         }
         svg {
             fill: #fff;
+        }
+        .test{
+            width:80%;
+            border:1px solid red;
         }
     </style>
 </head>
 
 <body>
+
+<span>
+</span>
 
 <div id="container">
     <div id="wrap">
@@ -63,38 +74,46 @@
 </div>
 
 
-    <script>
+<script>
 
-        const funAntiShake = (()=>{
-                let topTime = 0;
-        return (name,timer,execute,...rest) => {
-            if (timer && typeof timer !== "number") { console.error("please input number type of timer arguments") }
+    const mouse = {
+        width: document.getElementById('container').offsetWidth,
+        height: document.getElementById('container').offsetHeight,
+    }
+
+    const funAntiShake = (() => {
+        let topTime = 0;
+        return (name, timer, execute, ...rest) => {
+            if (timer && typeof timer !== "number") {
+                console.error("please input number type of timer arguments")
+            }
             const currentTime = Date.now();
             if (topTime + timer <= currentTime) {
                 topTime = Date.now();
-                execute && execute.apply(this,[...rest]);
+                execute && execute.apply(this, [...rest]);
             }
         }
-        })()
+    })()
 
-        const move = function (event) {
-            funAntiShake('name',20,()=>{
-                const {width,height} = event.currentTarget.getBoundingClientRect();
-                const ele = event.currentTarget;
-                const {offsetX,offsetY} = event;
-                let y = (offsetX / (width/2)  - 1)
-                let x = -(offsetY / (height/2)  - 1)
-                ele.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`
-            })
-        }
+    const move = function (event) {
+        funAntiShake('name', 0, function () {
+            let calcedOffsetX = (event.offsetX / (mouse.width / 2)) - 1,
+                calcedOffsetY = (event.offsetY / (mouse.height / 2)) - 1;
+                calcedOffsetY *= -1;
 
-        const out = function (event) {
-            event.currentTarget.style.transform = ``
-        }
 
-        container.addEventListener('mouseenter',move)
-        container.addEventListener('mousemove',move)
-        container.addEventListener('mouseout',out)
-    </script>
+            event.currentTarget.style.transform = `rotateY(${calcedOffsetX}deg) rotateX(${calcedOffsetY}deg)`
+        })
+    }
+
+    const out = function (event) {
+        event.currentTarget.style.transform = ``
+    }
+
+    container.onmouseenter = move;
+    container.onmousemove = move;
+    container.onmouseleave = out;
+
+</script>
 </body>
 </html>

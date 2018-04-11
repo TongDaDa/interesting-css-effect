@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            height: 100vh;
+            text-align: center;
+        }
+        main{
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body::before{
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            content: ' ';
+        }
+        #container{
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+            position: relative;
+            -webkit-transform-style: preserve-3d;
+            -moz-transform-style: preserve-3d;
+            -o-transform-style: preserve-3d;
+            /* transform-style: preserve-3d; */
+            -webkit-transition: -webkit-transform 1s;
+            -moz-transition: -moz-transform 1s;
+            -o-transition: -o-transform 1s;
+            transition: transform 1s;
+            margin-bottom: 100px;
+        }
+        .box{
+            display: block;
+            position: absolute;
+            width: 196px;
+            height: 196px;
+            border: 2px solid black;
+            line-height: 196px;
+            font-size: 120px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            transform: rotateY( 0 ) translateZ( 0 );
+            transition: .5s all ease;
+        }
+
+        .test {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 10px 20px;
+            background: rgba(0,0,0,.8);
+            border-radius: 10px;
+            color: #fff;
+        }
+
+        #container > div[data-num="1"]{  background: hsla( 0, 100%, 50%, 0.7 );  }
+        #container > div[data-num="2"]{  background: hsla( 60, 100%, 50%, 0.7 ); }
+        #container > div[data-num="3"]{  background: hsla( 180, 100%, 50%, 0.7 );  }
+        #container > div[data-num="4"]{  background: hsla( 120, 100%, 50%, 0.7 );  }
+        #container > div[data-num="5"]{  background: hsla( 240, 100%, 50%, 0.7 ); }
+        #container > div[data-num="6"]{  background: hsla( 300, 100%, 50%, 0.7 );  }
+
+        .front{
+            -webkit-transform: translateZ( 100px );
+            -moz-transform: translateZ( 100px );
+            -o-transform: translateZ( 100px );
+            transform: translateZ( 100px );
+        }
+        .back{
+            -webkit-transform: rotateX( -180deg ) translateZ( 100px );
+            -moz-transform: rotateX( -180deg ) translateZ( 100px );
+            -o-transform: rotateX( -180deg ) translateZ( 100px );
+            transform: rotateX( -180deg ) translateZ( 100px );
+        }
+        .left{
+            -webkit-transform: rotateY( -90deg ) translateZ( 100px );
+            -moz-transform: rotateY( -90deg ) translateZ( 100px );
+            -o-transform: rotateY( -90deg ) translateZ( 100px );
+            transform: rotateY( -90deg ) translateZ( 100px );
+        }
+        .right{
+            -webkit-transform: rotateY( 90deg ) translateZ( 100px );
+            -moz-transform: rotateY( 90deg ) translateZ( 100px );
+            -o-transform: rotateY( 90deg ) translateZ( 100px );
+            transform: rotateY( 90deg ) translateZ( 100px );
+        }
+        .top{
+            -webkit-transform: rotateX( 90deg ) translateZ( 100px );
+            -moz-transform: rotateX( 90deg ) translateZ( 100px );
+            -o-transform: rotateX( 90deg ) translateZ( 100px );
+            transform: rotateX( 90deg ) translateZ( 100px );
+        }
+        .bottom {
+            -webkit-transform: rotateX( -90deg ) translateZ( 100px );
+            -moz-transform: rotateX( -90deg ) translateZ( 100px );
+            -o-transform: rotateX( -90deg ) translateZ( 100px );
+            transform: rotateX( -90deg ) translateZ( 100px );
+        }
+    </style>
+</head>
+<body>
+
+<main>
+    <div id="container">
+        <div class="box front" data-num="1">1</div>
+        <div class="box back" data-num="2">2</div>
+        <div class="box right" data-num="3">3</div>
+        <div class="box left" data-num="4">4</div>
+        <div class="box top" data-num="5">5</div>
+        <div class="box bottom" data-num="6">6</div>
+    </div>
+    <div class="control" id="clickTransmit">
+        <button>front</button>
+        <button>back</button>
+        <button>left</button>
+        <button>right</button>
+        <button>bottom</button>
+        <button>top</button>
+        <button> 抽奖 </button>
+        <button> 重组 </button>
+    </div>
+</main>
+
+
+    <script>
+        const ele = document.getElementById('clickTransmit');
+        /**
+         *
+         * @param transformStr
+         * @return {{}}
+         */
+        const getTransformProperty = (transformStr) => {
+            if (transformStr === 'none') return transformStr
+            let head = transformStr.slice(0, transformStr.indexOf('('))
+            transformStr = transformStr.slice(transformStr.indexOf('(') + 1, -1)
+            let arr = transformStr.split(',')
+            let obj = {}
+            if (head.indexOf('3d') === -1 && head !== 'matrix') {
+                obj[head] = transformStr
+                return obj
+            }
+            head = head.substring(0, head.indexOf('3d'))
+            arr.forEach((i, k) => {
+                const ks = k === 0 ? 'X' : k === 1 ? 'Y' : '3d'
+                obj[`${head}${ks}`] = i
+            })
+            return obj
+        }
+
+        const getRandom = (radical) => {
+            const random = Math.random()
+            return random <= radical ? Number(random.toFixed(2)) : getRandom(radical)
+        }
+
+        const setBoxShadow = (children, type)=>{
+            for (let i = 0; i < children.length; i++) {
+                let child = children[i];
+                if (type === 'none') {
+                    child.style.boxShadow = ''
+                } else {
+                    const color = getComputedStyle(child).backgroundColor
+                    child.style.boxShadow =  `0 0 20px 5px ${color}`
+                }
+            }
+        }
+
+        const showMsg = (msg,dur)=>{
+           const ele = document.createElement('div')
+            ele.classList.add('test')
+            ele.innerHTML = msg
+            setTimeout(()=>{
+               ele.parentNode && ele.parentNode.removeChild(ele)
+            },dur)
+            document.body.appendChild(ele)
+        }
+
+        const updateStyle = (ele,style)=>{
+            for (let key in style) {
+                ele.style[key] = style[key]
+            }
+        }
+
+        ele.addEventListener('click',(e) => {
+            let x , y, selected;
+            let timer = null;
+            // x decide top bottom
+            // y decide left = 90 right = -90  back = 180
+            // front = 0 ;\
+            const text = e.target.textContent.trim();
+            const ele = container || document.getElementById('container');
+            const DIRECTION = [
+                {x:0, y: 0},
+                {x:180, y: 0},
+                {x:0, y: -90},
+                {x:0, y: 90},
+                {x:-90, y: 0},
+                {x:90, y: 0},
+            ]
+            switch (text) {
+                case 'front' : selected = 0;  break;
+                case 'back' : selected = 1; break;
+                case 'left': selected = 2; break;
+                case 'right': selected = 3; break;
+                case 'top': selected = 4; break;
+                case 'bottom' : selected = 5; break;
+                case '重组' :
+                    let arr = [];
+                    for (let i = 0; i < ele.children.length; i++) {
+                        let child = ele.children[i];
+                        const removeClass = [].join.call(child.classList).split(',')[1]
+                        arr.push(removeClass)
+                        if (removeClass) {
+                            child.classList.remove(removeClass)
+                        }
+                    }
+                    ele.style.transform = 'rotateY(30deg) rotateX(-50deg)'
+                    const addClass = (time)=>{
+                        timer = setTimeout(()=>{
+                            if (arr.length <= 0) { clearTimeout(timer); return; }
+                            ele.children[arr.length-1].addEventListener('transitionend',(e)=>{
+                                addClass(0)
+                            })
+                            ele.children[arr.length-1].classList.add(arr.pop())
+                        },time)
+                    }
+                    addClass(1500)
+                 break;
+                default : {
+                    let duration = 5000  // unit ms;
+                    let style = {};
+                    let trans = getTransformProperty(getComputedStyle(ele).transform)
+                    showMsg('开始抽奖',1000)
+                    if (trans === 'none') {
+                        trans = '`rotateX(45deg) rotateY(30deg)`';
+                        ele.style.transform = trans;
+                    }
+                    style.transitionDuration = `0ms`
+                    style.transform = `rotateX(${getRandom(1) * 10000}deg) rotateY(${getRandom(1) * 10000}deg)`;
+                    updateStyle(ele,style)
+                    //开始设置
+                    style.transitionDuration = `${duration}ms`
+                    const pos = DIRECTION[Math.floor(getRandom(.5) * 10)]
+                    style.transform = `rotateX(${pos.x}deg) rotateY(${pos.y}deg)`
+                    style.transitionTimingFunction = 'cubic-bezier(.3,.82,.45,.97)'
+                    setBoxShadow(ele.children,)
+                    setTimeout(()=>{
+                        setBoxShadow(ele.children, 'none')
+                    },duration/2)
+                    updateStyle(ele,style)
+                }
+            }
+
+            if (/^[a-zA-Z]+$/.test(text)) {
+                const {x,y} = DIRECTION[selected]
+                container.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`
+            }
+        })
+    </script>
+</body>
+</html>
