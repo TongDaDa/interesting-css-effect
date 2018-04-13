@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .input{
+
+        }
+        .span-replaceElement{
+            display: inline-block;
+        }
+        .span-replaceElement::before{
+            content: url(https://cdn.mdn.mozilla.net/static/img/home-dino.4c4029f73eb9.gif);
+        }
+    </style>
+</head>
+<body>
+
+<!--
+    替换元素的解析
+-->
+
+<!--
+    替换元素的特质 :
+    1. 元素宽度自适应
+    2. 相比行内元素，可以设置垂直方向的margin
+    3. 不可以为其设置伪元素
+    4. 有自己特定的样式
+
+    综上可以理解并推导出，替换元素与行块元素的区别是它有自身的样式属性，根据浏览器的 user agent style 样式可以看到，在初始样式阶段，用户代理
+    就为它们重新定义了一些样式，以 chrome 为例
+
+    input, textarea, select, button {
+        text-rendering: auto;
+        color: initial;
+        letter-spacing: normal;
+        word-spacing: normal;
+        text-transform: none;
+        text-indent: 0px;
+        text-shadow: none;
+        display: inline-block;
+        text-align: start;
+        margin: 0em;
+        font: 400 11px system-ui;
+    }
+
+    这些重置样式的手段只不过是浏览器后期去添加的，说白了，这和我们reset 自己的css一样，只不过这发生在每一个浏览器自己的环境中。那么对于内联元素其实还有更
+    底层的操作，比如
+
+    为 .span-replaceElement 行内元素添加伪元素 content 属性并用 url 函数为其加载一个图片，并且为他初始化一个属性为inline-block ，
+
+-->
+
+<input class="input" />
+
+<span class="span-replaceElement">
+
+</span>
+
+
+</body>
+</html>

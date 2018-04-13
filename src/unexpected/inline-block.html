@@ -24,7 +24,7 @@
             height: 450px;
             border-bottom: 1px solid #ddd;
         }
-        .module:first-child{
+        .module:last-child{
             font-size: 0;
         }
         .inline{
@@ -34,7 +34,7 @@
             display: inline-block;
             vertical-align: top;
         }
-        .inline:last-child{
+        .inline:first-child{
             vertical-align: bottom;
         }
     </style>
@@ -45,17 +45,38 @@
 <!--
 note:
 两个宽度为50%的行块元素出现换行情况
-cause:
-在每个行块元素旁，有空白节点占用空间，要想清除它可能需要font-size设置为0,或者在html结构上清除空格保持无间距例如
-<div><span><span><img /></div>
 
-对于 inline-block 元素如果里面有内容则根据元素里的内联元素的基线为准，如果元素为空，以margin框为准.
+cause:
+在每个inline-block元素旁，有空白节点占用空间，要想清除它可能需要font-size设置为0,或者在html结构层上清除
+换行空格保持两个标签无间距例如<div><span><span><img /></div>
+
+对于 inline-block 元素的基线位置，有以下规则，
+如果里面有内容则根据元素里的内联元素的基线为准，如果元素为空，以margin框为准.
+
+
+自问自答环节
+
+1. 请问，为什么只有内联元素旁边才会产生空白节点呢？块元素为啥不行它哪差了？
+
+答: 这个问题仔细想想应该很好理解，首先要明白块元素的使用价值，在css世界里它大多数负责结构布局，而每个结构中会出现各种
+图文混排等更细腻的布局，所以它主要的任务通俗点理解就是搭框子，而inline-block出现的意义就是为了弥补inline元素
+的大小固定性，要知道在早期的网站中，图文混排<p><img/></p>这种布局是非常常见的，我们不可能全部都使用float去实
+现，所以inline-block诞生，为的就是解决行内元素的高度灵活性，自适应性，回到正题，既然inline-block由inline而生，
+那它就具有它身上的特性，比如会构造一个文本行，在文本行当中，**所有节点**都会被当作文本节点，哪怕是空节点，说到这
+我们大概想通了，原来是行内块创建了文本行，而文本行中造就了空白节点，所以块元素是不会出现换行的。
+
+
+注意：如果在chrome浏览器中，手动修改其属性，比如在两个box中插入一个文本，然后将两个文本删除掉，则不会触发空白节点占位
+情况，仔细观察这不仅体现在这种情况，absolute等属性的种种迹象也将表明，不同时期的属性更改或者更新dom都有可能不一样，举个栗子，
+第一次进入页面，与后期的替换更新dom这两种渲染方式触发的"周边渲染"程度不一样，也就是说局部渲染可能达不到特定的css属性改变布局的"范围"，
+这浏览器的渲染行为有关系，所以我建议，不要直接在浏览器中操作属性在线查看效果，尽量在代码中更改，并刷新查看，
 -->
 
 <div class="module">
     <div class="box">
         xxx
     </div>
+    &nbsp;
     <div class="box">
         xxx
     </div>
@@ -66,7 +87,6 @@ cause:
     <div class="box">
         xxx
     </div>
-    XXX
     <div class="box">
         xxx
     </div>

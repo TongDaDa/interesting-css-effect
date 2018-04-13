@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body > div{  }
+        .relative{  position: relative;  }
+        .absolute {  position: absolute; }
+        .fixed{  position: fixed;  }
+
+        #examples{
+
+        }
+        #trick {
+
+        }
+
+
+
+        .absolute-temp-nav{  overflow: hidden;  }
+        .absolute-temp-nav > a {
+            padding: 0 20px;
+            line-height: 40px;
+            margin-right: 10px;
+            float: left;
+        }
+        .absolute-temp-nav .fix{
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 5px;
+            background: url(https://cdn.mdn.mozilla.net/static/img/home-dino.4c4029f73eb9.gif) center/20px no-repeat;
+        }
+
+        .absolute-containing-break{
+            position: relative;
+            width: 80%;
+            height: 150px;
+        }
+
+        .absolute-margin-auto{
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background: deeppink;
+        }
+        .absolute-margin-auto > div {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: blueviolet;
+            margin: 0 auto;
+        }
+
+        .trick-horizontal-center{
+            width: 200px;
+            height: 200px;
+            background: yellowgreen;
+            text-align: center;
+        }
+        .trick-horizontal-center > .absolute{
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            background: yellow;
+            margin-left: -50px;
+        }
+    </style>
+</head>
+<body>
+
+<!--
+    包含框(containing block)的概念
+    每个定位元素都有一个相对的包含框的概念，比如
+
+    块级元素
+        绝对定位元素的包含框是position属性不为 static 值的祖先元素，它首先会创建一个包含框，并脱离 normal flow ，后代却依然保留正常流(但子元素不会脱离其父元素),
+        固定定位元素与决定定位唯一的区别就是，它通过视口创建了一个包含框，可以理解成是整个文档，浏览器的视口区域也就是viewport (a window or other viewing area on the screen)
+        相对定位元素则是相对于它的块级祖先元素
+
+    对于绝对定位来说，如果它的 containing box 是行内元素的话，情况相对复杂
+        1. inline元素，前后会
+
+    1. 无依赖绝对定位
+-->
+
+
+<!--
+    first example ⬇ for 行内，无依赖绝对定位
+
+    无依赖，是指没有 left right top bottom 值的定位元素
+    对于absolute来说，它很多应用场景都是可以独立使用，也就是不依赖方向值，就比如我们可以利用其特性完成nav 小图标的布局
+
+    1. 自适应文字，不论多少，图标还是存在于文字的后面
+    2. 具有独立性，不用为其他元素添加多余属性.
+
+    注意，由于<a>inline-block或float掉之后，它会被自适应性(inline-block | float)情况下忽略其存在, 这里需注意，绝对定位的自适应性的边界是包含框，详情见 example 4
+    后面的兄弟元素会忽略它的存在，而依然会受到前面元素的影响
+-->
+<div class="absolute-temp-nav">
+    <a> 首页 <i class="fix absolute"> </i>&nbsp;</a>
+    <a> 商品 <i class="fix absolute"> </i>&nbsp;</a>
+    <a> 优惠 <i class="fix absolute"> </i>&nbsp;</a>
+    <a> 特色 <i class="fix absolute"> </i>&nbsp;</a>
+    <a> 关于我们 <i class="fix absolute"> </i>&nbsp;</a>
+</div>
+
+<!--
+    以下是块级无依赖绝对定位
+    与inline元素唯一的区别就是它换行了，
+
+    为什么行内元素absolute之后可以设置margin与width height 它与包含框之间的关系 ?
+
+    在块级换行效应依然生效, 包含框与行内或块级元素之间的区别是什么？
+
+-->
+<div class="absolute-temp-block">
+    <div class="absolute normal-block">
+
+    </div>
+</div>
+
+
+<!--
+    在 containing 盒子中， 使用margin居中
+    这里需要注意的是，containing box 与元素的 width height 的区别，前者可以理解成一个框，是 left ... 等方向
+    属性的相对坐标，也是定位属性的
+-->
+<div class="absolute-margin-auto">
+    <div class="absolute">
+
+    </div>
+</div>
+
+
+<!--example-4-->
+<div id="examples">
+    <h3> 栗子 </h3>
+    <div class="absolute-containing-break">
+        <div class="absolute" style="background: deepskyblue;">
+            In the absolute positioning model, a box is explicitly offset with respect to its containing block. It is
+            removed from the normal flow entirely (it has no impact on later siblings). An absolutely positioned box
+            establishes a new containing block for normal flow children and absolutely (but not fixed) positioned
+            descendants. However, the contents of an absolutely positioned element do not flow around any other boxes. They
+            may obscure the contents of another box (or be obscured themselves), depending on the stack levels of the
+            overlapping boxes.
+
+            References in this specification to an absolutely positioned element (or its box) imply that the element's
+            'position' property has the value 'absolute' or 'fixed'.
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 小技巧 -->
+
+<!--使用 inline-block + absolute 与空节点实现水平居中-->
+<div id="trick">
+    <h3> small trick </h3>
+    <div class="trick-horizontal-center">
+        <div class="absolute">
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
