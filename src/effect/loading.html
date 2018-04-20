@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../css/fa-brands.css" />
     <link rel="stylesheet" href="../../css/fa-solid.css" />
     <link rel="stylesheet" href="../../css/fa-regular.css">
+    <link rel="stylesheet" href="../../css/test.css" />
     <style>
         body{
             height: 100vh;
@@ -141,10 +142,6 @@
             animation: ColorCircle infinite;
             -webkit-animation-duration: 2s;
             animation-duration: 2s;
-            text-fill-color: transparent;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            -webkit-background-clip: text;
             background-size: 100% 200%;
             font-size: 30px;
         }
@@ -163,6 +160,85 @@
         }
         .bfc_test::first-line{
             color: blue;
+        }
+    </style>
+
+    <style>
+        @keyframes cube {
+            0%, 10% {
+                transform: perspective(140px) rotateX(-180deg);
+                opacity: 0
+            }
+            25%, 75% {
+                transform: perspective(140px) rotateX(0);
+                opacity: 1
+            }
+            100%, 90% {
+                transform: perspective(140px) rotateY(180deg);
+                opacity: 0
+            }
+        }
+        .piece-loading > .piece-wrap{
+            width: 40px;
+            height: 40px;
+            margin: 0 20px;
+        }
+        .piece-loading .cube{
+            position: relative;
+            float: left;
+            width: 50%;
+            height: 50%;
+        }
+        .piece-loading .cube::before{
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            background: yellowgreen;
+            transform-origin:right bottom;
+            animation: cube 2.4s linear infinite both;
+            content: ' ';
+        }
+        .cube1{ transform: scale(1.1);  }
+        .cube2{  transform: scale(1.1) rotateZ(90deg);  }
+        .cube3{  transform: scale(1.1) rotateZ(180deg);  }
+        .cube4{  transform: scale(1.1) rotateZ(270deg);  }
+        .cube2::before{
+            animation-delay: .3s !important;
+        }
+        .cube3::before{
+            animation-delay: .6s !important;
+        }
+        .cube4::before{
+            animation-delay: .9s !important;
+        }
+    </style>
+
+    <style>
+        @keyframes high-jump-circle {
+            from {
+                transform: translate3d(0,-150px,0);
+                box-shadow: 0 150px 100px rgba(0,0,0,.1),
+                        0 -3px 15px 2px rgba(0,0,0,.3) inset;
+            }
+            to{
+                transform: translate3d(0,0,0);
+                box-shadow: 0 15px 10px rgba(0,0,0,.6),
+                        0 -3px 15px 2px rgba(0,0,0,.3) inset;
+            }
+        }
+        .high-jump-loading{
+            position: relative;
+        }
+        .high-jump-loading .circle {
+            display: block;
+            width: 50px;
+            height: 50px;
+            background: #eee;
+            box-shadow: 0 -3px 15px 2px rgba(0,0,0,.3) inset;
+            border-radius: 50%;
+            animation: high-jump-circle infinite cubic-bezier(.6,0.08,0.8,.6) .3s alternate both;
         }
     </style>
 </head>
@@ -184,8 +260,7 @@
     <!--::before font icon-->
     <!-- text-fill-color-->
     <!-- -webkit-background-clip-->
-    <div class="fa fa-bolt lightning-loading">
-    </div>
+    <div class="fa fa-bolt lightning-loading"></div>
 
     <!--gradient-->
     <div class="gradient-loading animated animated1 infinite colorCycle linear flex flex-column items-center justify-center">
@@ -197,6 +272,20 @@
                   class="">
             </path>
         </svg>
+    </div>
+
+    <div class="piece-loading">
+        <div class="piece-wrap">
+            <div class="cube1 cube"></div>
+            <div class="cube2 cube"></div>
+            <div class="cube4 cube"></div>
+            <div class="cube3 cube"></div>
+        </div>
+    </div>
+
+
+    <div class="high-jump-loading">
+        <ball class="circle"></ball>
     </div>
 
 </body>

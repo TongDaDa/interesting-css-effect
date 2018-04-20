@@ -3,8 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        .header{
+            background: #ddd;
+        }
+        .msg-icon{  }
+    </style>
 </head>
 <body>
+<!--
+   vertical-align 属性用来设置行内元素的垂直对齐方式，它有下面几个值:
+   <percentage>
+   <length>
+   top sub super text-top text-bottom bottom middle baseline
+-->
 
+
+<!--
+    首先理解一个正常的现象，以下是一个状态提示，左text，右svg的一个图片，我们发现文字明显下降了很多，没有底部对齐，我们来解刨一下，为什么会出现这个情况
+-->
+<header class="header">
+    <span> 成功 </span>
+    <svg class="msg-icon success" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 375.147 375.147" style="enable-background:new 0 0 375.147 375.147;" xml:space="preserve" width="20px" height="20px">
+<g>
+	<g>
+		<polygon points="344.96,44.48 119.147,270.293 30.187,181.333 0,211.52 119.147,330.667 375.147,74.667   " fill="#006DF0"></polygon>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+</header>
+
+<div>
+    <p>
+        <h3> no.1 </h3>
+        默认是baseline对齐，
+        <img src="../../img/vertical-1.png" alt="" >
+    </p>
+
+    <p>
+        <h3> no.2 </h3>
+        在把line-height,取消掉，输入一个x值，我们看一下，其实x是和图标的框对齐的，所以造成这种情况发生的，大概有了两种
+        情况
+        1. 相对元素的实体图标与框没有完全贴合，造成视觉上的差距，
+        2. 汉字的底部普遍比基线的位置要低，这点我们在图中可以看到x的底部是要比汉字靠上的。
+        第一个问题，我们可以修改图标本身，让它完全贴合框，但是第二个问题，由于每个字体的尺度不一，没有办法给出绝对的值(到底低于基线底部多少？)
+        <img src="../../img/vertical-1.png" alt="" >
+    </p>
+
+    <p>
+        no.1
+        <img src="../../img/vertical-1.png" alt="" >
+    </p>
+
+
+</div>
 </body>
 </html>

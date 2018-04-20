@@ -4,20 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        body > div{  }
         .relative{  position: relative;  }
         .absolute {  position: absolute; }
         .fixed{  position: fixed;  }
-
-        #examples{
-
-        }
-        #trick {
-
-        }
-
-
-
         .absolute-temp-nav{  overflow: hidden;  }
         .absolute-temp-nav > a {
             padding: 0 20px;
@@ -31,7 +20,6 @@
             margin: -10px 0 0 5px;
             background: url(https://cdn.mdn.mozilla.net/static/img/home-dino.4c4029f73eb9.gif) center/20px no-repeat;
         }
-
         .absolute-containing-break{
             position: relative;
             width: 80%;
@@ -57,17 +45,21 @@
         }
 
         .trick-horizontal-center{
+            position: relative;
             width: 200px;
             height: 200px;
             background: yellowgreen;
-            text-align: center;
         }
         .trick-horizontal-center > .absolute{
-            display: inline-block;
+            position: absolute;
             width: 100px;
             height: 100px;
+            left: 0;
+            right:0;
+            top:0;
+            bottom: 0;
+            margin: auto;
             background: yellow;
-            margin-left: -50px;
         }
     </style>
 </head>
@@ -81,13 +73,7 @@
         绝对定位元素的包含框是position属性不为 static 值的祖先元素，它首先会创建一个包含框，并脱离 normal flow ，后代却依然保留正常流(但子元素不会脱离其父元素),
         固定定位元素与决定定位唯一的区别就是，它通过视口创建了一个包含框，可以理解成是整个文档，浏览器的视口区域也就是viewport (a window or other viewing area on the screen)
         相对定位元素则是相对于它的块级祖先元素
-
-    对于绝对定位来说，如果它的 containing box 是行内元素的话，情况相对复杂
-        1. inline元素，前后会
-
-    1. 无依赖绝对定位
 -->
-
 
 <!--
     first example ⬇ for 行内，无依赖绝对定位
@@ -98,8 +84,8 @@
     1. 自适应文字，不论多少，图标还是存在于文字的后面
     2. 具有独立性，不用为其他元素添加多余属性.
 
-    注意，由于<a>inline-block或float掉之后，它会被自适应性(inline-block | float)情况下忽略其存在, 这里需注意，绝对定位的自适应性的边界是包含框，详情见 example 4
-    后面的兄弟元素会忽略它的存在，而依然会受到前面元素的影响
+    注意，由于<a>inline-block或float掉之后，它会被忽略存在, 这里需注意，绝对定位的自适应性的边界是包含框，详情见 example 4
+    后面的兄弟元素会忽略它的存在，而依然会受到前面元素的影响的
 -->
 <div class="absolute-temp-nav">
     <a> 首页 <i class="fix absolute"> </i>&nbsp;</a>
@@ -113,24 +99,21 @@
     以下是块级无依赖绝对定位
     与inline元素唯一的区别就是它换行了，
 
-    为什么行内元素absolute之后可以设置margin与width height 它与包含框之间的关系 ?
+    问：为什么行内元素absolute之后可以设置margin与width height 它与包含框之间的关系 ?
 
-    在块级换行效应依然生效, 包含框与行内或块级元素之间的区别是什么？
-
+    答：行内元素主要就是在行内填充文字的，都absolute了指定会忽略后面的元素，所以再让它保持这种特性也是没有必要的，
+    这样做是正确的。它与包含块可以脑补成它相对定位元素的一个虚拟框，比如绝对定位之后，它的包含框通常是上层的定位元
+    素，那么left:0,right:0之后包含框被放大，然而这并不影响元素本身，在包含框之内css依然保持正常流，所以可以理解
+    成它定位元素外面的一个父级的，只不过如果没有设置 width height 它默认是100%
 -->
-<div class="absolute-temp-block">
-    <div class="absolute normal-block">
-
-    </div>
-</div>
-
 
 <!--
-    在 containing 盒子中， 使用margin居中
-    这里需要注意的是，containing box 与元素的 width height 的区别，前者可以理解成一个框，是 left ... 等方向
-    属性的相对坐标，也是定位属性的
+    在 containing 盒子中， 使用margin水平垂直居中
+    这里需要注意的是，containing box 与元素的 width height 的区别
+
+    这里需要注意一点，在定位元素中，100% 和 inherit 是不一样的，前者相对元素的值，后者是直接继承父元素的值.
 -->
-<div class="absolute-margin-auto">
+<div class="trick-horizontal-center">
     <div class="absolute">
 
     </div>
@@ -154,21 +137,6 @@
         </div>
     </div>
 </div>
-
-
-
-<!-- 小技巧 -->
-
-<!--使用 inline-block + absolute 与空节点实现水平居中-->
-<div id="trick">
-    <h3> small trick </h3>
-    <div class="trick-horizontal-center">
-        <div class="absolute">
-
-        </div>
-    </div>
-</div>
-
 
 </body>
 </html>

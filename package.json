@@ -1,0 +1,25 @@
+{
+  "name": "interesting-css-effect",
+  "version": "1.0.0",
+  "description": "There's a some interesting css effect. I will regularly update and perfect them",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TongDaDa/interesting-css-effect.git"
+  },
+  "keywords": [
+    "css"
+  ],
+  "author": "aflyingpig",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TongDaDa/interesting-css-effect/issues"
+  },
+  "homepage": "https://github.com/TongDaDa/interesting-css-effect#readme",
+  "devDependencies": {
+    "vuepress": "^0.4.0"
+  }
+}
